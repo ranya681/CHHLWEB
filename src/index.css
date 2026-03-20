@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Klee+One:wght@400;600&family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Noto Serif SC", serif;
+  --font-sans: "Noto Sans SC", sans-serif;
+  --font-handdrawn: "Caveat", "Klee One", cursive;
+  --font-elegant: "Playfair Display", serif;
+  --color-brand-orange: #F97316;
+  --color-brand-red: #EF4444;
+  --color-brand-green: #22C55E;
+  --color-bg-warm: #FDFBF7;
+  --animate-blob: blob 7s infinite;
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes float-tl {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(5vw, 5vh); }
+}
+@keyframes float-tr {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-5vw, 5vh); }
+}
+@keyframes float-bl {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(5vw, -5vh); }
+}
+@keyframes float-br {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-5vw, -5vh); }
+}
+@keyframes float-tc {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(0, 8vh); }
+}
+@keyframes float-bc {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(0, -8vh); }
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-warm);
+  color: #333;
+  user-select: none;
+  /* Paper Airplane Cursor (Matching Image: Top-Left to Bottom-Right, rotated 15deg) */
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='rotate(15, 3, 3)'%3E%3Cpath d='M3 3 L27 15 L19 19 L15 27 Z' fill='white' stroke='black' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M3 3 L19 19' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") 3 3, auto;
+}
+
+* {
+  /* Paper Airplane Cursor (Matching Image: Top-Left to Bottom-Right, rotated 15deg) */
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='rotate(15, 3, 3)'%3E%3Cpath d='M3 3 L27 15 L19 19 L15 27 Z' fill='white' stroke='black' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M3 3 L19 19' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E") 3 3, auto;
+}
+
+.cursor-grab-hand, .cursor-grab-hand * {
+  /* Default Grab Cursor as requested */
+  cursor: grab !important;
+}
+
+.cursor-grab-hand:active, .cursor-grab-hand:active * {
+  cursor: grabbing !important;
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-handdrawn {
+  font-family: var(--font-handdrawn);
+}
+
+.editor-content,
+.editor-content *,
+h1, h2, h3, h4, h5, h6,
+.font-serif {
+  cursor: inherit !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  caret-color: transparent !important;
+}
+
+.editor-content:empty:before {
+  content: attr(placeholder);
+  color: #999;
+  pointer-events: none;
+  display: block; /* For Firefox */
+}
+
+/* Force title block to scale correctly and align baseline */
+.editor-content .items-baseline {
+  align-items: baseline !important;
+  border-bottom-width: 0.2em !important;
+}
+.editor-content .items-baseline > span {
+  font-size: 2em !important;
+}
+.editor-content .items-baseline > h2 {
+  font-size: 1em !important;
+}
+.editor-content .items-baseline > span *,
+.editor-content .items-baseline > h2 * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+.editor-content .items-baseline > span,
+.editor-content .items-baseline > h2 {
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: baseline !important;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #e5e7eb;
+  border-radius: 20px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+}
+
+/* Curled Shadows for Sticky Notes */
+.shadow-curl-br {
+  position: relative;
+}
+.shadow-curl-br::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 18px;
+  right: 15px;
+  left: 30px;
+  top: 70%;
+  box-shadow: 0 25px 20px rgba(0,0,0,0.25);
+  transform: rotate(8deg);
+}
+
+.shadow-curl-bl {
+  position: relative;
+}
+.shadow-curl-bl::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 18px;
+  left: 15px;
+  right: 30px;
+  top: 70%;
+  box-shadow: 0 25px 20px rgba(0,0,0,0.25);
+  transform: rotate(-8deg);
+}
+
+.shadow-curl-bottom {
+  position: relative;
+}
+.shadow-curl-bottom::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 18px;
+  left: 20px;
+  right: 20px;
+  top: 70%;
+  box-shadow: 0 25px 20px rgba(0,0,0,0.25);
+  border-radius: 100px / 20px;
+}
+
+.writing-vertical-rl {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
