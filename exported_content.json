@@ -1,0 +1,106 @@
+{
+  "projects": [
+    {
+      "id": "1",
+      "title": "LOKI Project",
+      "blocks": [
+        {
+          "id": "b1",
+          "type": "text",
+          "content": "<h1 class=\"text-4xl font-serif font-bold mb-6 text-brand-orange\">LOKI Project</h1><p class=\"text-xl text-gray-600 mb-8\">A minimalist design exploration focusing on clean lines and subtle interactions.</p>",
+          "x": 50,
+          "y": 50,
+          "zIndex": 1
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Make Us Care",
+      "blocks": [
+        {
+          "id": "b3",
+          "type": "text",
+          "content": "<h1 class=\"text-4xl font-serif font-bold mb-6 text-brand-green\">Make Us Care</h1><p class=\"text-xl text-gray-600 mb-8\">A campaign focused on environmental awareness and sustainable living.</p>",
+          "x": 50,
+          "y": 50,
+          "zIndex": 1
+        },
+        {
+          "id": "b4",
+          "type": "image",
+          "content": "https://images.unsplash.com/photo-1466692476877-396416fd4622?q=80&w=2671&auto=format&fit=crop",
+          "x": 50,
+          "y": 200,
+          "zIndex": 2
+        }
+      ]
+    }
+  ],
+  "growth": [
+    {
+      "id": "growth-1",
+      "type": "text",
+      "content": "<h1 class=\"text-5xl font-serif font-bold mb-8 text-brand-green\">个人成长</h1><p class=\"text-2xl text-gray-600 mb-12 leading-relaxed\">在这里记录我的学习轨迹、思考感悟和成长瞬间。</p>",
+      "x": 50,
+      "y": 50,
+      "zIndex": 1
+    },
+    {
+      "id": "growth-2",
+      "type": "image",
+      "content": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2670&auto=format&fit=crop",
+      "x": 50,
+      "y": 300,
+      "zIndex": 2
+    },
+    {
+      "id": "growth-3",
+      "type": "text",
+      "content": "<h2 class=\"text-3xl font-serif font-bold mt-12 mb-6 text-brand-orange\">2024年的目标</h2><ul class=\"list-disc pl-6 space-y-4 text-xl text-gray-700\"><li>掌握前端全栈开发技能</li><li>完成至少3个独立设计项目</li><li>保持每周阅读一本书的习惯</li></ul>",
+      "x": 50,
+      "y": 600,
+      "zIndex": 3
+    },
+    {
+      "id": "growth-4",
+      "type": "text",
+      "content": "<h2 class=\"text-3xl font-serif font-bold mt-16 mb-8 text-brand-blue\">多面手</h2><p class=\"text-xl text-gray-700 leading-relaxed\">我一直认为，在这个快速变化的时代，做一个“多面手”比单纯的专家更有优势。从设计到前端，从文案到产品思维，每一个维度的拓展都是在为未来的可能性加码。</p>",
+      "x": 50,
+      "y": 900,
+      "zIndex": 4
+    },
+    {
+      "id": "growth-5",
+      "type": "text",
+      "content": "<h2 class=\"text-3xl font-serif font-bold mt-16 mb-8 text-brand-red\">一次自认为“理性”的退场</h2><p class=\"text-xl text-gray-700 leading-relaxed\">退场并不总是意味着失败，有时候它是一种更高维度的进取。当我意识到当下的路径已经无法支撑我的长期愿景时，选择理性的离开，是为了在更广阔的天地里重新出发。</p>",
+      "x": 50,
+      "y": 1200,
+      "zIndex": 5
+    },
+    {
+      "id": "growth-6",
+      "type": "text",
+      "content": "<h2 class=\"text-3xl font-serif font-bold mt-16 mb-8 text-brand-orange\">重大转折</h2><p class=\"text-xl text-gray-700 leading-relaxed\">生命中总有一些时刻，看似微不足道，却在多年后回望时发现那是命运的齿轮开始转动的瞬间。那个转折点，让我从一个单纯的执行者，变成了一个拥有全局视野的创造者。</p>",
+      "x": 50,
+      "y": 1500,
+      "zIndex": 6
+    },
+    {
+      "id": "growth-7",
+      "type": "text",
+      "content": "<h2 class=\"text-3xl font-serif font-bold mt-16 mb-8 text-brand-green\">我与AI</h2><p class=\"text-xl text-gray-700 leading-relaxed\">AI不是对手，而是延伸。它像是一面镜子，映照出人类创造力的本质；又像是一个支点，撬动了效率的边界。在与AI共生的过程中，我学会了如何更好地提问，如何更深刻地思考。</p>",
+      "x": 50,
+      "y": 1800,
+      "zIndex": 7
+    },
+    {
+      "id": "growth-8",
+      "type": "text",
+      "content": "<h2 class=\"text-3xl font-serif font-bold mt-16 mb-8 text-brand-blue\">有限与无限</h2><p class=\"text-xl text-gray-700 leading-relaxed\">在有限的时间里，追求无限的可能。这听起来像是一个悖论，但正是这种张力驱动着我们不断前行。我们无法延长生命的长度，但我们可以通过不断的探索和创造，无限地拓宽它的宽度。</p>",
+      "x": 50,
+      "y": 2100,
+      "zIndex": 8
+    }
+  ]
+}

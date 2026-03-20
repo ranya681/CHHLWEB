@@ -242,6 +242,11 @@ export default function Home() {
     };
   }, []);
 
+  // Reset counter on mount
+  useEffect(() => {
+    totalPlacedRef.current = 0;
+  }, []);
+
   // Creative easter egg trigger logic
   useEffect(() => {
     if (notes.length >= 15 && !showCreative) {
@@ -370,13 +375,13 @@ export default function Home() {
         {/* Central Text - Right Aligned */}
         <div 
           className="absolute top-[20%] right-[-15%] md:right-[-10%] flex flex-col items-end text-right z-10 pointer-events-none space-y-6"
-          style={{ transform: 'translateY(0.5rem)' }}
+          style={{ transform: 'translateY(0.2rem) scale(0.85) translateX(-1.5em)' }}
         >
           {showCuriosity && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="absolute -top-[144px] md:-top-[164px] right-[calc(5%-3rem)] text-[3rem] md:text-[4rem] whitespace-nowrap"
+              className="absolute -top-[192px] md:-top-[228px] right-[calc(5%-3rem)] text-[3rem] md:text-[4rem] whitespace-nowrap"
               style={{ 
                 fontFamily: "'Segoe Print', cursive",
                 fontWeight: 'bold',
@@ -431,7 +436,7 @@ export default function Home() {
         </div>
 
         {/* Pyramid Layout for Sources - Absolute Positioning */}
-        <div className="absolute top-[40%] left-[20%] md:left-[25%] z-20 scale-75 md:scale-90">
+        <div className="absolute top-[40%] left-[20%] md:left-[25%] z-20 scale-[0.6375] md:scale-[0.765]">
           {PYRAMID_POSITIONS.map((pos) => {
             const source = STICKY_SOURCES.find(s => s.id === pos.id);
             if (!source) return null;

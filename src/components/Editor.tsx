@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Image as ImageIcon, Type, Trash2, GripHorizontal, Heading, Palette, Type as TypeIcon, Bold, AlignLeft, AlignCenter, AlignRight, AlignJustify, Indent } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
-import { motion, useDragControls } from 'framer-motion';
+import { motion, useDragControls, AnimatePresence } from 'framer-motion';
 import { HandDrawnX, HandDrawnCheck, HandDrawnQuestion } from './StickyNotes';
 
 export type Block = {
@@ -28,6 +28,8 @@ interface EditorProps {
   blocks?: Block[];
   onChange?: (blocks: Block[]) => void;
   trashRef?: React.RefObject<HTMLDivElement>;
+  offsetX?: string;
+  isAdmin?: boolean;
 }
 
 interface BlockItemProps {
@@ -250,12 +252,43 @@ const BlockItem: React.FC<BlockItemProps> = ({
   );
 };
 
-export default function Editor({ blocks = [], onChange, trashRef }: EditorProps) {
+export default function Editor({ blocks = [], onChange, trashRef, offsetX }: EditorProps) {
   const [maxZIndex, setMaxZIndex] = useState(1);
   const [selectedBlockIds, setSelectedBlockIds] = useState<string[]>([]);
   const [selectionBox, setSelectionBox] = useState<{ startX: number, startY: number, currentX: number, currentY: number } | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  const DESIGN_WIDTH = 1280;
+
+  useEffect(() => {
+    const updateScale = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.offsetWidth;
+        if (width < DESIGN_WIDTH) {
+          setScale(width / DESIGN_WIDTH);
+        } else {
+          setScale(1);
+        }
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
+
+  const [showExport, setShowExport] = useState(false);
+  const exportData = () => {
+    const data = JSON.stringify(blocks, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'editor_data.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   useEffect(() => {
     if (blocks.length > 0) {
@@ -454,46 +487,87 @@ export default function Editor({ blocks = [], onChange, trashRef }: EditorProps)
         id="project-editor-container"
         ref={containerRef}
         className="relative w-full bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden"
-        style={{ minHeight: Math.max(1200, blocks.length > 0 ? Math.max(...blocks.map(b => b.y + 500)) : 1200) }}
+        style={{ 
+          minHeight: Math.max(1200, blocks.length > 0 ? Math.max(...blocks.map(b => b.y + 500)) : 1200) * scale,
+          height: blocks.length > 0 ? (Math.max(...blocks.map(b => b.y + 500)) * scale) : undefined
+        }}
         onPointerDown={handleContainerPointerDown}
         onContextMenu={(e) => e.preventDefault()}
       >
-        {/* selectionBox disabled for visitor view
-        {selectionBox && (
-          <div 
-            className="absolute border-2 border-brand-blue bg-brand-blue/10 z-[99999] pointer-events-none"
-            style={{
-              left: Math.min(selectionBox.startX, selectionBox.currentX),
-              top: Math.min(selectionBox.startY, selectionBox.currentY),
-              width: Math.abs(selectionBox.currentX - selectionBox.startX),
-              height: Math.abs(selectionBox.currentY - selectionBox.startY),
-            }}
-          />
-        )}
-        */}
+        <div 
+          style={{ 
+            transform: `scale(${scale * 1.08})`, 
+            transformOrigin: 'top left',
+            width: DESIGN_WIDTH,
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            left: offsetX || 0
+          }}
+        >
+          {blocks.length === 0 && (
+            <div className="absolute inset-0 flex items-center justify-center text-gray-400 pointer-events-none">
+              暂无内容
+            </div>
+          )}
+          
+          {blocks.map((block) => (
+            <BlockItem
+              key={block.id}
+              block={block}
+              isSelected={selectedBlockIds.includes(block.id)}
+              isMultiSelected={selectedBlockIds.length > 1 && selectedBlockIds.includes(block.id)}
+              dragOffset={dragOffset}
+              onDragMulti={handleDragMulti}
+              onDragMultiEnd={handleDragMultiEnd}
+              containerRef={containerRef}
+              updateBlock={updateBlock}
+              removeBlock={removeBlock}
+              bringToFront={bringToFront}
+              handleImageUpload={handleImageUpload}
+            />
+          ))}
+        </div>
+      </div>
 
-        {blocks.length === 0 && (
-          <div className="absolute inset-0 flex items-center justify-center text-gray-400 pointer-events-none">
-            暂无内容
-          </div>
-        )}
-        
-        {blocks.map((block) => (
-          <BlockItem
-            key={block.id}
-            block={block}
-            isSelected={selectedBlockIds.includes(block.id)}
-            isMultiSelected={selectedBlockIds.length > 1 && selectedBlockIds.includes(block.id)}
-            dragOffset={dragOffset}
-            onDragMulti={handleDragMulti}
-            onDragMultiEnd={handleDragMultiEnd}
-            containerRef={containerRef}
-            updateBlock={updateBlock}
-            removeBlock={removeBlock}
-            bringToFront={bringToFront}
-            handleImageUpload={handleImageUpload}
-          />
-        ))}
+      {/* Export Button */}
+      <div className="fixed bottom-4 right-4 z-[60] flex flex-col items-end gap-2">
+        <AnimatePresence>
+          {showExport && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.9 }}
+              className="bg-white p-4 rounded-xl shadow-2xl border border-gray-200 w-80 mb-2"
+            >
+              <h3 className="text-sm font-bold mb-2">数据导出说明</h3>
+              <p className="text-xs text-gray-500 mb-4 leading-relaxed">
+                您在浏览器中编辑的内容存储在本地缓存中。下载源码后，请将导出的 JSON 数据替换代码中的 <code>DEFAULT_PROJECTS</code> 或 <code>DEFAULT_GROWTH_BLOCKS</code> 常量，以永久保存您的修改。
+              </p>
+              <div className="flex gap-2">
+                <button 
+                  onClick={exportData}
+                  className="flex-1 py-2 bg-brand-orange text-white text-xs font-bold rounded-lg hover:bg-brand-orange/90 transition-colors"
+                >
+                  下载当前页面 JSON
+                </button>
+                <button 
+                  onClick={() => setShowExport(false)}
+                  className="px-3 py-2 bg-gray-100 text-gray-600 text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors"
+                >
+                  关闭
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <button 
+          onClick={() => setShowExport(!showExport)}
+          className="w-10 h-10 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full shadow-lg flex items-center justify-center text-gray-400 hover:text-brand-orange transition-colors"
+          title="数据管理"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        </button>
       </div>
     </div>
   );
