@@ -257,20 +257,24 @@ export default function Growth() {
             ))}
           </div>
  
-          <Editor blocks={blocks} onChange={setBlocks} offsetX="3.5em" contentScale={1.08} />
+          <Editor blocks={blocks} onChange={setBlocks} offsetX="5.0em" contentScale={1.05} isAdmin={true} allowDrag={true} />
+        </div>
+
+        {/* Back to Top Button - Fixed and aligned with white area */}
+        <div className="fixed bottom-12 left-1/2 -translate-x-1/2 w-full max-w-[1600px] pointer-events-none z-50">
+          <div className="relative w-full h-full px-8 md:px-16 lg:px-28">
+            <button
+              onClick={scrollToTop}
+              className="absolute right-2 md:right-6 lg:right-14 bottom-0 pointer-events-auto w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-400 hover:text-brand-orange hover:border-brand-orange/30 transition-colors"
+              title="回到顶部"
+              style={{ transform: 'translateY(-1em)' }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+            </button>
+          </div>
         </div>
       </motion.div>
 
-      {/* Fixed Back to Top Button Container */}
-      <div className="fixed bottom-2 right-14 z-50">
-        <button
-          onClick={scrollToTop}
-          className="w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-400 hover:text-brand-orange hover:border-brand-orange/30 transition-colors"
-          title="回到顶部"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-        </button>
-      </div>
     </div>
   );
 }

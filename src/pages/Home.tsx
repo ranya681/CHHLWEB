@@ -242,11 +242,6 @@ export default function Home() {
     };
   }, []);
 
-  // Reset counter on mount
-  useEffect(() => {
-    totalPlacedRef.current = 0;
-  }, []);
-
   // Creative easter egg trigger logic
   useEffect(() => {
     if (notes.length >= 15 && !showCreative) {
@@ -375,7 +370,7 @@ export default function Home() {
         {/* Central Text - Right Aligned */}
         <div 
           className="absolute top-[20%] right-[-15%] md:right-[-10%] flex flex-col items-end text-right z-10 pointer-events-none space-y-6"
-          style={{ transform: 'translateY(0.2rem) scale(0.85) translateX(-1.5em)' }}
+          style={{ transform: 'translateY(0.5rem) scale(0.85) translateX(-3.0em)' }}
         >
           {showCuriosity && (
             <motion.div
